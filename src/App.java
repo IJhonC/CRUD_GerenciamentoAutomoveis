@@ -13,6 +13,8 @@ import javax.swing.text.PlainDocument;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.text.NumberFormat;
 import java.text.ParseException;
 
@@ -176,6 +178,17 @@ public class App extends JFrame {
             e.printStackTrace();
         }
 
+        //Filtra apenas letras e números para o final da placa
+        finalPlaca.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!Character.isLetterOrDigit(c)) {
+                    e.consume(); 
+                }
+            }
+        });
+
         tCor = new JLabel("Cor *");
         tCor.setBounds(345, 70, 100, 30);
         painelDados.add(tCor);
@@ -281,6 +294,8 @@ public class App extends JFrame {
         tValor.setBounds(510, 130, 100, 30);
         painelDados.add(tValor);
 
+        //-----------Formatção Valor---------
+
         // Formato para aceitar números com 2 casas decimais
         NumberFormat numberFormat = NumberFormat.getNumberInstance();
         numberFormat.setMinimumFractionDigits(2);
@@ -288,13 +303,15 @@ public class App extends JFrame {
 
         // Formatter para o campo de texto
         NumberFormatter numberFormatter = new NumberFormatter(numberFormat);
-        numberFormatter.setAllowsInvalid(false); // Não permite valores inválidos
-        numberFormatter.setMinimum(0.00); // Valor mínimo permitido
+        numberFormatter.setAllowsInvalid(false); 
+        numberFormatter.setMinimum(0.00); 
         numberFormatter.setMaximum(9999999999.00);
 
         valor = new JFormattedTextField(numberFormatter);
         valor.setBounds(510, 160, 150, 25);
         painelDados.add(valor);
+
+        //-----------FIM Formatção Valor---------
 
         TDescricao = new JLabel("Descrição ");
         TDescricao.setBounds(15, 220, 100, 30);
