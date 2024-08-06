@@ -9,7 +9,7 @@ public class Veiculo {
     private int ano;
     private int kmAtual;
     private String motorizacao;
-    private int finalPlaca;
+    private String finalPlaca;
     private String cor;
     private String combustivel;
     private String cidade;
@@ -23,7 +23,7 @@ public class Veiculo {
     }
 
     public Veiculo(String chassi, String modelo, String fabricante, int ano, int kmAtual, String motorizacao,
-            int finalPlaca, String cor, String combustivel, String cidade, String carroceria,
+            String finalPlaca, String cor, String combustivel, String cidade, String carroceria,
             double valor, String opcionais, String descricao) {
         this.chassi = chassi;
         this.modelo = modelo;
@@ -97,11 +97,11 @@ public class Veiculo {
         this.motorizacao = motorizacao;
     }
 
-    public int getFinalPlaca() {
+    public String getFinalPlaca() {
         return finalPlaca;
     }
 
-    public void setFinalPlaca(int finalPlaca) {
+    public void setFinalPlaca(String finalPlaca) {
         this.finalPlaca = finalPlaca;
     }
 

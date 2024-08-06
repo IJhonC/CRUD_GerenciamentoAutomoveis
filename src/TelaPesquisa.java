@@ -21,6 +21,7 @@ public class TelaPesquisa extends JFrame {
     private static JTable tblPesquisa;
     private static JButton btnPesquisa;
     private static JButton btnFechar;
+    private static JButton btnLimpar;
 
     // Lista Para Pesquisa
     ArrayList<Veiculo> listData = new ArrayList<>();;
@@ -32,8 +33,9 @@ public class TelaPesquisa extends JFrame {
         setLocationRelativeTo(null);
         setLayout(null);
 
-        // Adiciona um listenar para atulizar os botões caso o usuário aperta no X para
-        // fexhar a tela
+        // Adiciona um listenar para atulizar os botões da tela principal caso o usuário
+        // aperta no X para
+        // fechar a tela de pesquisa
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -93,6 +95,11 @@ public class TelaPesquisa extends JFrame {
         btnFechar.setBorder(new App.RoundedBorder(8));
         add(btnFechar);
 
+        btnLimpar = new JButton("Limpar");
+        btnLimpar.setBounds(270, 370, 120, 30);
+        btnLimpar.setBorder(new App.RoundedBorder(8));
+        add(btnLimpar);
+
         // Listeners para a função dos botões
 
         // Botão fechar
@@ -113,6 +120,25 @@ public class TelaPesquisa extends JFrame {
                 pesquisar();
             }
         });
+
+        // Botão Limpar
+        btnLimpar.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                tPesquisa.setText("");
+
+                DefaultTableModel modeloPesquisaLimpo = new DefaultTableModel(new Object[] {
+                        "Chassi",
+                        "Modelo",
+                        "Ano",
+                        "Cor",
+                        "Final da Placa" }, 0);
+
+                tblPesquisa.setModel(modeloPesquisaLimpo);
+            }
+        });
+
         /*
          * Adiciona o listner na tabela para quando der duplo clique, fechar a tela
          * de pesquisa e resgatar o veiculo selecionado

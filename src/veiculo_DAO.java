@@ -59,7 +59,7 @@ public class veiculo_DAO {
             pstmt.setString(8, veiculo.getMotorizacao());
             pstmt.setString(9, veiculo.getCombustivel());
             pstmt.setString(10, veiculo.getCor());
-            pstmt.setInt(11, veiculo.getFinalPlaca());
+            pstmt.setString(11, veiculo.getFinalPlaca());
             pstmt.setString(12, veiculo.getCarroceria());
             pstmt.setString(13, veiculo.getCidade());
             pstmt.setInt(14, (int) veiculo.getValor());
@@ -101,7 +101,7 @@ public class veiculo_DAO {
                 car.setCor(rs.getString("cor"));
                 car.setOpcionais(rs.getString("opcionais"));
                 car.setDescricao(rs.getString("descricao"));
-                car.setFinalPlaca(rs.getInt("fimPlaca"));
+                car.setFinalPlaca(rs.getString("fimPlaca"));
                 car.setCod(rs.getInt("codigo"));
                 listCar.add(car);
             }

@@ -169,7 +169,7 @@ public class App extends JFrame {
         painelDados.add(tFinalPlaca);
 
         try {
-            finalPlaca = new JFormattedTextField(new MaskFormatter("#"));
+            finalPlaca = new JFormattedTextField(new MaskFormatter("*"));
             finalPlaca.setBounds(180, 100, 150, 25);
             painelDados.add(finalPlaca);
         } catch (ParseException e) {
@@ -471,7 +471,7 @@ public class App extends JFrame {
             String varMotorizacao = (motorizacao.getSelectedItem() != null)
                     ? motorizacao.getSelectedItem().toString().trim()
                     : "";
-            String varFinalPlaca = finalPlaca.getText().trim();
+            String varFinalPlaca = finalPlaca.getText().trim().toUpperCase();
             String varCor = (cor.getSelectedItem() != null) ? cor.getSelectedItem().toString().trim() : "";
             String varCombustivel = (combustivel.getSelectedItem() != null)
                     ? combustivel.getSelectedItem().toString().trim()
@@ -501,7 +501,6 @@ public class App extends JFrame {
             // vazios
             int varAnoInt = Integer.parseInt(varAno);
             int varKmAtual = Integer.parseInt(varKmAtualText);
-            int varFinalPlacaInt = Integer.parseInt(varFinalPlaca);
             System.out.println(valorText);
             double varValor = Double.parseDouble(valorText.isEmpty() ? "0" : valorText);
             System.out.println(varValor);
@@ -526,7 +525,7 @@ public class App extends JFrame {
 
                 // Continua com o processamento se todas as validações foram bem-sucedidas
                 Veiculo veiculo = new Veiculo(varChassi, varModelo, varFabricante, varAnoInt, varKmAtual,
-                        varMotorizacao, varFinalPlacaInt, varCor, varCombustivel, varCidade, varCarroceria,
+                        varMotorizacao, varFinalPlaca, varCor, varCombustivel, varCidade, varCarroceria,
                         varValor, varOpcionais, varDescricao);
                 return veiculo;
             }
