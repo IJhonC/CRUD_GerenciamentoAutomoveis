@@ -265,7 +265,6 @@ public class App extends JFrame {
         carroceria.addItem("Perua");
         carroceria.addItem("Picape");
         carroceria.addItem("Minivan");
-        carroceria.addItem("Van");
         carroceria.addItem("Roadster");
         carroceria.addItem("Liftback");
         carroceria.addItem("Fastback");

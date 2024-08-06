@@ -31,12 +31,14 @@ public class TelaPesquisa extends JFrame {
         setSize(708, 450);
         setLocationRelativeTo(null);
         setLayout(null);
-        
-         // Adiciona um listenar para atulizar os botões caso o usuário aperta no X para fexhar a tela
-         addWindowListener(new WindowAdapter() {
+
+        // Adiciona um listenar para atulizar os botões caso o usuário aperta no X para
+        // fexhar a tela
+        addWindowListener(new WindowAdapter() {
             @Override
-            public void windowClosing(WindowEvent e){
-                App.btnPesquisar.setEnabled(true);;
+            public void windowClosing(WindowEvent e) {
+                App.btnPesquisar.setEnabled(true);
+                ;
             }
         });
 
@@ -62,6 +64,14 @@ public class TelaPesquisa extends JFrame {
         tPesquisa = new JTextField();
         tPesquisa.setBounds(10, 35, 650, 30);
         pnlPesquisa.add(tPesquisa);
+
+        // Listener para tratar quando o usuário aperta ENTER para a pesquisa
+        tPesquisa.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                pesquisar();
+            }
+        });
 
         // Tabela de Rotorno da pesquisa
         tblPesquisa = new JTable();
@@ -100,24 +110,9 @@ public class TelaPesquisa extends JFrame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Verificação se o campo de pesquisa está em branco
-                if (tPesquisa.getText().trim().equals("")) {
-                    JOptionPane.showMessageDialog(null, "Campo de pesquisa em branco!");
-                    return;
-                }
-                // Verificação se o campo de pesquisa contem pelo menos 3 carcteres
-                if (tPesquisa.getText().trim().length() < 3) {
-                    JOptionPane.showMessageDialog(null,
-                            "Digite pelo menos 3 carcteres numéricos");
-                    return;
-                }
-                listData = dao.pesquisarCadastro(tPesquisa.getText());
-                atualizarTabela();
+                pesquisar();
             }
         });
-
-       
-
         /*
          * Adiciona o listner na tabela para quando der duplo clique, fechar a tela
          * de pesquisa e resgatar o veiculo selecionado
@@ -170,5 +165,23 @@ public class TelaPesquisa extends JFrame {
             modeloPesquisa.addRow(linha);
         }
         tblPesquisa.setModel(modeloPesquisa);
+
+    }
+
+    // Método para verificação e pesquisa
+    private void pesquisar() {
+        // Verificação se o campo de pesquisa está em branco
+        if (tPesquisa.getText().trim().equals("")) {
+            JOptionPane.showMessageDialog(null, "Campo de pesquisa em branco!");
+            return;
+        }
+        // Verificação se o campo de pesquisa contem pelo menos 3 carcteres
+        if (tPesquisa.getText().trim().length() < 3) {
+            JOptionPane.showMessageDialog(null,
+                    "Digite pelo menos 3 carcteres numéricos");
+            return;
+        }
+        listData = dao.pesquisarCadastro(tPesquisa.getText());
+        atualizarTabela();
     }
 }
