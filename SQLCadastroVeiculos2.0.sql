@@ -15,10 +15,10 @@ descricao 		VARCHAR(100)		NOT NULL,
 motorizacao 	VARCHAR(50)			NOT NULL,
 combustivel 	VARCHAR(50)			NOT NULL,
 cor 			VARCHAR(100)		NOT NULL,
-fimPlaca		INT 				NOT NULL,
+fimPlaca		VARCHAR(1) 				NOT NULL,
 carroceria 		VARCHAR(100)		NOT NULL,
 cidade 			VARCHAR(100)		NOT NULL,
-valor 			INT(11)				NOT NULL
+valor 			DOUBLE				NOT NULL
 );
 
 select * from cadastro;
