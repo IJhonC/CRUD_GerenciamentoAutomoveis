@@ -16,13 +16,12 @@ public class veiculo_DAO {
     private final String password = "";
 
     public boolean chassiExiste(String chassi, Veiculo carSelecionado) {
-        String SQL ="";
+        String SQL = "";
         if (carSelecionado != null) {
             SQL = "SELECT COUNT(*) FROM cadastro WHERE chassi = ? and codigo <> ?";
-        }else{
+        } else {
             SQL = "SELECT COUNT(*) FROM cadastro WHERE chassi = ?";
         }
-       
 
         try (Connection conn = DriverManager.getConnection(url, user, password);
                 PreparedStatement pstmt = conn.prepareStatement(SQL)) {
@@ -62,7 +61,7 @@ public class veiculo_DAO {
             pstmt.setString(11, veiculo.getFinalPlaca());
             pstmt.setString(12, veiculo.getCarroceria());
             pstmt.setString(13, veiculo.getCidade());
-            pstmt.setInt(14, (int) veiculo.getValor());
+            pstmt.setDouble(14, veiculo.getValor());
 
             int affectedRows = pstmt.executeUpdate();
             if (affectedRows > 0) {
@@ -96,7 +95,7 @@ public class veiculo_DAO {
                 car.setCombustivel(rs.getString("combustivel"));
                 car.setCidade(rs.getString("cidade"));
                 car.setCarroceria(rs.getString("carroceria"));
-                car.setValor(rs.getInt("valor"));
+                car.setValor(rs.getDouble("valor"));
                 car.setAno(rs.getInt("ano"));
                 car.setCor(rs.getString("cor"));
                 car.setOpcionais(rs.getString("opcionais"));
@@ -130,7 +129,7 @@ public class veiculo_DAO {
             pstmt.setString(6, carAlterado.getCombustivel());
             pstmt.setString(7, carAlterado.getCidade());
             pstmt.setString(8, carAlterado.getCarroceria());
-            pstmt.setString(9, String.valueOf((int) carAlterado.getValor()));
+            pstmt.setString(9, String.valueOf(carAlterado.getValor()));
             pstmt.setString(10, String.valueOf(carAlterado.getAno()));
             pstmt.setString(11, carAlterado.getCor());
             pstmt.setString(12, carAlterado.getOpcionais());

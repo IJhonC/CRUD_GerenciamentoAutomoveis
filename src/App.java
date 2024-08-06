@@ -52,7 +52,7 @@ public class App extends JFrame {
     private static JLabel tCarroceria;
     private static JComboBox<String> carroceria;
     private static JLabel tValor;
-    private static JTextField valor;
+    private static JFormattedTextField valor;
     private static JLabel tOpcionais;
     private static JTextField opcionais;
     private static JLabel TDescricao;
@@ -281,9 +281,19 @@ public class App extends JFrame {
         tValor.setBounds(510, 130, 100, 30);
         painelDados.add(tValor);
 
-        valor = new JTextField();
+        // Formato para aceitar números com 2 casas decimais
+        NumberFormat numberFormat = NumberFormat.getNumberInstance();
+        numberFormat.setMinimumFractionDigits(2);
+        numberFormat.setMaximumFractionDigits(2);
+
+        // Formatter para o campo de texto
+        NumberFormatter numberFormatter = new NumberFormatter(numberFormat);
+        numberFormatter.setAllowsInvalid(false); // Não permite valores inválidos
+        numberFormatter.setMinimum(0.00); // Valor mínimo permitido
+        numberFormatter.setMaximum(9999999999.00);
+
+        valor = new JFormattedTextField(numberFormatter);
         valor.setBounds(510, 160, 150, 25);
-        valor.setDocument(new MonetarioDocument());
         painelDados.add(valor);
 
         TDescricao = new JLabel("Descrição ");
@@ -430,34 +440,6 @@ public class App extends JFrame {
         }
     }
 
-    class MonetarioDocument extends PlainDocument {
-        private static final int MAX_DIGITS = 11;
-
-        @Override
-        public void insertString(int offset, String str, AttributeSet attr) throws BadLocationException {
-            if (str == null)
-                return;
-            String plainText = getText(0, getLength()).replaceAll("\\D", "") + str.replaceAll("\\D", "");
-            if (plainText.length() > MAX_DIGITS)
-                return;
-            super.remove(0, getLength());
-            super.insertString(0, "R$ " + formatValue(plainText), attr);
-        }
-
-        @Override
-        public void remove(int offset, int length) throws BadLocationException {
-            String plainText = new StringBuilder(getText(0, getLength())).delete(offset, offset + length).toString()
-                    .replaceAll("\\D", "");
-            super.remove(0, getLength());
-            super.insertString(0, "R$ " + formatValue(plainText.isEmpty() ? "0" : plainText), null);
-        }
-
-        private String formatValue(String value) {
-            long num = Long.parseLong(value);
-            return String.format("%,d", num).replace(',', '.');
-        }
-    }
-
     // Esse método verifica todos os campos da tela cadastro e gera o objeto Veiculo
     private static Veiculo criarVeiculo() {
         try {
@@ -502,7 +484,7 @@ public class App extends JFrame {
             int varAnoInt = Integer.parseInt(varAno);
             int varKmAtual = Integer.parseInt(varKmAtualText);
             System.out.println(valorText);
-            double varValor = Double.parseDouble(valorText.isEmpty() ? "0" : valorText);
+            double varValor = ((Number) valor.getValue()).doubleValue();
             System.out.println(varValor);
             // Verificação do comprimento do chassi, ele permite apenas valores reais para
             // numeros e letras, nao permite valores nulos
@@ -550,7 +532,7 @@ public class App extends JFrame {
         cidade.setText(car.getCidade());
         carroceria.setSelectedItem(car.getCarroceria());
 
-        valor.setText(String.valueOf((int) car.getValor()));
+        valor.setValue(car.getValor());
 
         opcionais.setText(car.getOpcionais());
         descricao.setText(car.getDescricao());
@@ -575,7 +557,7 @@ public class App extends JFrame {
         combustivel.setSelectedItem("");
         cidade.setText("");
         carroceria.setSelectedItem("");
-        valor.setText("");
+        valor.setValue(null);
         opcionais.setText("");
         descricao.setText("");
     }
