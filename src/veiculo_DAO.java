@@ -109,7 +109,7 @@ public class veiculo_DAO {
         }
 
         if (listCar.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Autmóvel não cadastrado!");
+            JOptionPane.showMessageDialog(null, "Automóvel não cadastrado!");
         }
         return listCar;
     }
