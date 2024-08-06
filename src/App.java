@@ -7,7 +7,6 @@ import javax.swing.border.Border;
 import javax.swing.text.MaskFormatter;
 import javax.swing.text.NumberFormatter;
 
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -176,13 +175,13 @@ public class App extends JFrame {
             e.printStackTrace();
         }
 
-        //Filtra apenas letras e números para o final da placa
+        // Filtra apenas letras e números para o final da placa
         finalPlaca.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
                 char c = e.getKeyChar();
                 if (!Character.isLetterOrDigit(c)) {
-                    e.consume(); 
+                    e.consume();
                 }
             }
         });
@@ -276,14 +275,11 @@ public class App extends JFrame {
         carroceria.addItem("Perua");
         carroceria.addItem("Picape");
         carroceria.addItem("Minivan");
-        carroceria.addItem("Roadster");
-        carroceria.addItem("Liftback");
         carroceria.addItem("Fastback");
         carroceria.addItem("Ute");
         carroceria.addItem("Van");
         carroceria.addItem("Roadster");
         carroceria.addItem("Liftback");
-        carroceria.addItem("Fastback");
         carroceria.addItem("Ute");
         carroceria.setBounds(345, 160, 150, 25);
         painelDados.add(carroceria);
@@ -292,7 +288,7 @@ public class App extends JFrame {
         tValor.setBounds(510, 130, 100, 30);
         painelDados.add(tValor);
 
-        //-----------Formatção Valor---------
+        // -----------Formatção Valor---------
 
         // Formato para aceitar números com 2 casas decimais
         NumberFormat numberFormat = NumberFormat.getNumberInstance();
@@ -301,15 +297,15 @@ public class App extends JFrame {
 
         // Formatter para o campo de texto
         NumberFormatter numberFormatter = new NumberFormatter(numberFormat);
-        numberFormatter.setAllowsInvalid(false); 
-        numberFormatter.setMinimum(0.00); 
-        numberFormatter.setMaximum(9999999999.00);
+        numberFormatter.setAllowsInvalid(false);
+        numberFormatter.setMinimum(0.00);
+        numberFormatter.setMaximum(999999999.00);
 
         valor = new JFormattedTextField(numberFormatter);
         valor.setBounds(510, 160, 150, 25);
         painelDados.add(valor);
 
-        //-----------FIM Formatção Valor---------
+        // -----------FIM Formatção Valor---------
 
         TDescricao = new JLabel("Descrição ");
         TDescricao.setBounds(15, 220, 100, 30);
@@ -411,9 +407,23 @@ public class App extends JFrame {
         btnExcluir.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                veiculo_DAO dao = new veiculo_DAO();
-                dao.excluirVeiculo(carSelecionado);
-                limparCampos();
+                int response = JOptionPane.showConfirmDialog(
+                        null,
+                        "Tem certeza que deseja excluir?",
+                        "Confirmação de Exclusão",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.WARNING_MESSAGE);
+
+                // Verifica a resposta
+                if (response == JOptionPane.YES_OPTION) {
+                    // Código para excluir o item vai aqui
+                    veiculo_DAO dao = new veiculo_DAO();
+                    dao.excluirVeiculo(carSelecionado);
+                    limparCampos();
+                } else {
+                    // A exclusão foi cancelada
+                    return;
+                }
             }
         });
     }

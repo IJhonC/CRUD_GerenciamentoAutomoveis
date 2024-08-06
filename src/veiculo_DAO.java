@@ -163,6 +163,8 @@ public class veiculo_DAO {
             boolean result = pstmt.execute();
             pstmt.close();
 
+            
+
             if (!result) {
                 JOptionPane.showMessageDialog(null, "Registro Excluido!");
             } else {
